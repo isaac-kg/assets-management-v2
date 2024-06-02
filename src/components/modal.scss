@@ -1,0 +1,32 @@
+.custom-modal {
+  .ant-modal-content {
+    padding: 0;
+  }
+
+
+  .ant-modal-header {
+    background-color:#084077;
+    text-align: center;
+    padding: 20px 12px;
+  }
+
+  .ant-modal-title {
+    color: white;
+    font-size: 22px;
+    font-weight: 400;
+  }
+
+  .ant-modal-close-x {
+    display: none;
+  }
+
+  .ant-modal-body {
+    padding: 12px;
+    max-height: 65vh;
+    overflow-y: scroll;
+  }
+
+  .ant-modal-footer {
+    padding: 12px;
+  }
+}
