@@ -1,7 +1,22 @@
-import { FC } from "react";
-import { Input, Button, Typography } from "antd";
+import { FC } from 'react';
+import { Button } from 'antd';
+import { Form, Formik } from 'formik';
+import { useRef } from 'react';
+import * as Yup from 'yup';
+import CustomInput from '../components/Input';
 
-const Login:FC = () => {
+const Login: FC = () => {
+
+  const registerSchema = Yup.object().shape({
+    password: Yup.string().required('Required'),
+    email: Yup.string().email('Invalid email').required('Required'),
+  });
+
+  const initialValues = {
+    password: '',
+    email: '',
+  };
+
   return (
     <div className="h-screen flex">
       <div className="w-6/12 bg-slate-200 hidden md:flex">
@@ -20,23 +35,54 @@ const Login:FC = () => {
           <p className="text-base mt-2 mb-8">
             Welcome to PWY Consulting assets management platform.
           </p>
-          <div>
-            <p className="text-base mb-1">Email Address</p>
-            <Input size="large" name="name" placeholder="Enter email address" />
-          </div>
-          <div className="mt-6">
-            <p className="text-base mb-1">Password</p>
-            <Input size="large" name="name" placeholder="Enter email address" />
-          </div>
-          <p className="text-right mt-2">Forgot Password?</p>
-          <div className="mt-6">
-            <Button type="primary" size="large" block>
-              Sign In
-            </Button>
-          </div>
+
+          <Formik
+            initialValues={initialValues}
+            onSubmit={(values, actions) => {
+              console.log('Value: ', values);
+              //TODO submit values to backend.
+            }}
+            validationSchema={registerSchema}
+          >
+            {({ values, handleChange, errors, touched, handleBlur }) => (
+              <Form>
+                <div>
+                  <CustomInput
+                    label="Email Address"
+                    name="email"
+                    value={values.email}
+                    placeholder="Enter email address"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    errors={errors.email}
+                    touched={touched.email}
+                  />
+                </div>
+                <div className="mt-6">
+                  <CustomInput
+                    label="Password"
+                    name="password"
+                    value={values.password}
+                    placeholder="Enter password"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    errors={errors.password}
+                    touched={touched.password}
+                    type="password"
+                  />
+                </div>
+                <p className="text-right mt-2">Forgot Password?</p>
+                <div className="mt-6">
+                  <Button type="primary" size="large" block htmlType="submit">
+                    Sign In
+                  </Button>
+                </div>
+              </Form>
+            )}
+          </Formik>
           <p className="mt-4 text-center text-base">
-            Don't have an account?{" "}
-            <span className="text-primary font-bold">Sign Up</span>
+            Don't have an account?{' '}
+            <span className="text-primary-color font-bold">Sign Up</span>
           </p>
         </div>
       </div>

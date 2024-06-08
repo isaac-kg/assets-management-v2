@@ -48,11 +48,7 @@ const Register = () => {
             <Formik
               initialValues={initialValues}
               onSubmit={(values, actions) => {
-                console.log("This are the values.....", values)
-                setIsSubmitting(true)
-              setTimeout(() => {
-                setIsSubmitting(false)
-              }, 5000)
+                //TODO submit values to backend.
               }}
               validationSchema={registerSchema}
               innerRef={formRef}

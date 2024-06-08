@@ -10,7 +10,8 @@ interface CustomInputProp {
   value: string;
   touched?: any;
   errors?: any;
-  onBlur?: (e: any) => void
+  onBlur?: (e: any) => void;
+  type?: string
 }
 
 const CustomInput: FC<CustomInputProp> = ({
@@ -21,7 +22,8 @@ const CustomInput: FC<CustomInputProp> = ({
   value,
   touched,
   errors,
-  onBlur
+  onBlur,
+  type
 }) => {
 
   return (
@@ -35,6 +37,7 @@ const CustomInput: FC<CustomInputProp> = ({
         value={value}
         onBlur={onBlur}
         status={(touched || (value && value.length > 0)) && errors   ? "error" : ""}
+        type={type || "text"}
       />
       <div>
       {(touched || (value && value.length > 0)) && errors  ? 

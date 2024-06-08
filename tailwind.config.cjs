@@ -51,6 +51,8 @@ module.exports = {
         success: '#219653',
         danger: '#D34053',
         warning: '#FFA70B',
+        "secondary-color": "#f79421", 
+        "primary-color":"#1B437A", 
       },
       fontSize: {
         'title-xxl': ['44px', '55px'],

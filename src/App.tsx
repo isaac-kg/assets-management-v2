@@ -40,7 +40,7 @@ function App() {
       path: '/maintenance',
       element: <Maintenance />,
     },
-    { path: '*', element: <p>Not found</p> },
+    { path: '*', element: <p className='text-center text-4xl mt-15'>Not found</p> },
   ]);
 
   return <RouterProvider router={router} />;
