@@ -1,12 +1,13 @@
 import { FC } from 'react';
 import { Button } from 'antd';
 import { Form, Formik } from 'formik';
-import { useRef } from 'react';
+import { useNavigate } from "react-router-dom"
 import * as Yup from 'yup';
 import CustomInput from '../components/Input';
 
 const Login: FC = () => {
 
+  const navigate = useNavigate()
   const registerSchema = Yup.object().shape({
     password: Yup.string().required('Required'),
     email: Yup.string().email('Invalid email').required('Required'),
@@ -41,6 +42,8 @@ const Login: FC = () => {
             onSubmit={(values, actions) => {
               console.log('Value: ', values);
               //TODO submit values to backend.
+              navigate("/dashboard")
+
             }}
             validationSchema={registerSchema}
           >
