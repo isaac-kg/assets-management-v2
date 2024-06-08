@@ -1,52 +1,37 @@
-import { useEffect, useState } from 'react';
-import { Route, RouterProvider, Routes, createBrowserRouter, useLocation } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import Loader from './common/Loader';
-import Calendar from './pages/Calendar';
-import Chart from './pages/Chart';
-import ECommerce from './pages/Dashboard/ECommerce';
-import Tables from './pages/Tables';
-import Alerts from './pages/UiElements/Alerts';
-import Buttons from './pages/UiElements/Buttons';
-import { ConfigProvider } from "antd";
+import Dashboard from './pages/Dashboard';
+import User from './pages/User';
 import Login from './pages/Login';
+import Product from './pages/Product';
+import Maintenance from './pages/Maintenance';
 
 function App() {
-  const [loading, setLoading] = useState<boolean>(true);
-
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: '/',
       element: <Login />,
     },
-  
     {
-      element: <ECommerce />,
-      children: [
-        {
-          path: "dashboard",
-          element: <Tables />,
-        },
-        {
-          path: "tables",
-          element: <Tables/>,
-        },
-        {
-          path: "portfolio",
-          element: <h1 className="text-center m-auto">Portfolio</h1>,
-        },
-        {
-          path: "reports",
-          element: <h1 className="text-center m-auto">Report</h1>,
-        },
-      ],
+      path: '/dashboard',
+      element: <Dashboard />,
     },
+    {
+      path: '/user',
+      element: <User />,
+    },
+    {
+      path: '/product',
+      element: <Product />,
+    },
+    {
+      path: '/maintenance',
+      element: <Maintenance />,
+    },
+    { path: '*', element: <p>Not found</p> },
   ]);
-  
 
-  return  (
-   <RouterProvider router={router} />
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

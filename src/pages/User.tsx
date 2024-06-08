@@ -3,10 +3,10 @@ import TableOne from '../components/Tables/TableOne';
 import TableTwo from '../components/Tables/TableTwo';
 import DefaultLayout from '../layout/DefaultLayout';
 
-const Tables = () => {
+const User = () => {
   return (
     <DefaultLayout>
-      <Breadcrumb pageName="Tables" />
+      <Breadcrumb pageName="Users" />
 
       <div className="flex flex-col gap-10">
         <TableOne />
@@ -16,4 +16,4 @@ const Tables = () => {
   );
 };
 
-export default Tables;
+export default User;
