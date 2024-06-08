@@ -5,8 +5,20 @@ import User from './pages/User';
 import Login from './pages/Login';
 import Product from './pages/Product';
 import Maintenance from './pages/Maintenance';
+import axios from 'axios';
+import { useEffect } from 'react';
 
 function App() {
+
+  const baseUrl = "https://jsonplaceholder.typicode.com/" 
+  useEffect(() => {
+    axios.get(`${baseUrl}todos/1`).then((response) => {
+      console.log("Response. data")
+    }).catch((error) => {
+      console.log("Error")
+    });
+  }, []);
+
   const router = createBrowserRouter([
     {
       path: '/',

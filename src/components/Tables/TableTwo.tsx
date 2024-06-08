@@ -1,12 +1,8 @@
 import { Product } from '../../types/product';
-import ProductOne from '../../images/product/product-01.png';
-import ProductTwo from '../../images/product/product-02.png';
-import ProductThree from '../../images/product/product-03.png';
-import ProductFour from '../../images/product/product-04.png';
 
 const productData: Product[] = [
   {
-    image: ProductOne,
+    image: "",
     name: 'Apple Watch Series 7',
     category: 'Electronics',
     price: 296,
@@ -14,7 +10,7 @@ const productData: Product[] = [
     profit: 45,
   },
   {
-    image: ProductTwo,
+    image: "",
     name: 'Macbook Pro M1',
     category: 'Electronics',
     price: 546,
@@ -22,7 +18,7 @@ const productData: Product[] = [
     profit: 125,
   },
   {
-    image: ProductThree,
+    image: "",
     name: 'Dell Inspiron 15',
     category: 'Electronics',
     price: 443,
@@ -30,7 +26,7 @@ const productData: Product[] = [
     profit: 247,
   },
   {
-    image: ProductFour,
+    image: "",
     name: 'HP Probook 450',
     category: 'Electronics',
     price: 499,
