@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 
 function App() {
 
-  const baseUrl = "https://jsonplaceholder.typicode.com/" 
+  const baseUrl = "https://pwy-consulting-backend.vercel.app/" 
   useEffect(() => {
     axios.get(`${baseUrl}todos/1`).then((response) => {
       console.log("Response. data")

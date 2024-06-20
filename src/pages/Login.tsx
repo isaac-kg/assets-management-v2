@@ -4,6 +4,7 @@ import { Form, Formik } from 'formik';
 import { useNavigate } from "react-router-dom"
 import * as Yup from 'yup';
 import CustomInput from '../components/Input';
+import axios from 'axios';
 
 const Login: FC = () => {
 
@@ -42,7 +43,46 @@ const Login: FC = () => {
             onSubmit={(values, actions) => {
               console.log('Value: ', values);
               //TODO submit values to backend.
-              navigate("/dashboard")
+
+              axios.post(`http://localhost:4000/login`, values).then(res => {
+                console.log("res =>", res)
+                
+// data
+// : 
+// profile
+// : 
+// cellNumber
+// : 
+// "+27795813108"
+// email
+// : 
+// "admin@pwy-consulting.com"
+// firstName
+// : 
+// "Admin"
+// idNumber
+// : 
+// "0000000000000"
+// lastName
+// : 
+// "Admin"
+// roles
+// : 
+// ['admin']
+// [[Prototype]]
+// : 
+// Object
+// token
+// : 
+// "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IntcInVzZXJfaWRcIjpcIkNkUldrSDlEWUFUb3cyeWVpXCJ9IiwiaWF0IjoxNzE4ODgwNTQwLCJleHAiOjE3MTg5MDkzNDB9.dhLgBe-1klXmwNMwiikT1g-dPXiG_79_cZf9ef9gDuE"
+// _id
+// : 
+// "CdRWkH9DYATow2yei"
+                navigate("/dashboard")
+                res.data;
+              }).catch(err => {
+                console.log("err =>", err)
+              })
 
             }}
             validationSchema={registerSchema}

@@ -5,6 +5,7 @@ import { useRef } from "react";
 import * as Yup from "yup";
 import CustomInput from "../Input";
 import CustomModal from "../Modal";
+import axios from "axios";
 
 const Register = () => {
   const [openModal, setModalOpen] = useState(false);
@@ -48,7 +49,18 @@ const Register = () => {
             <Formik
               initialValues={initialValues}
               onSubmit={(values, actions) => {
+                values.roles = "tester";
+                values.password = "Admin@123";
                 //TODO submit values to backend.
+                // roles: admin, scanner, office-manager
+
+              axios.post(`http://localhost:4000/signup`, values).then(res => {
+                console.log("res =>", res)
+                // navigate("/dashboard")
+                res.data;
+              }).catch(err => {
+                console.log("err =>", err)
+              })
               }}
               validationSchema={registerSchema}
               innerRef={formRef}

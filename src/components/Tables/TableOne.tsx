@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Pagination, Table, Typography } from "antd";
 import type { TableProps } from "antd";
 import Register from "./Register";
+import axios from "axios";
 
 const TableOne = () => {
    
@@ -83,6 +84,22 @@ const TableOne = () => {
       cellNumber: "+27 524 224 4324",
     },
   ];
+
+  useEffect(() => {
+    console.log("I'm called....")
+    fetchData();
+  }, []);
+
+  const fetchData = () => {
+
+    axios.get(`http://localhost:4000/fetch-users`).then(res => {
+      console.log("res =>", res)
+      // navigate("/dashboard")
+      res.data;
+    }).catch(err => {
+      console.log("err =>", err)
+    })
+  }
 
 
   return (
