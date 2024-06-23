@@ -1,44 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Button, Pagination, Table, Typography } from "antd";
-import type { TableProps } from "antd";
 import Register from "./Register";
-import axios from "axios";
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchAllUsers } from "../../store/admin/actions/admin.actions";
 
 const TableOne = () => {
-   
-  interface DataType {
-    key: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    cellNumber: string;
-  }
+  const dispatch = useDispatch();
+  const { allUsers } = useSelector((state) => state.admin);
 
-  const columns: TableProps["columns"] = [
+  const columns = [
     {
-      title: "Firstname",
-      dataIndex: "firstName",
+      title: "First Name",
+      dataIndex: ['profile', "firstName"],
       key: "firstName",
     },
     {
-      title: "Lastname",
-      dataIndex: "lastName",
+      title: "Last Name",
+      dataIndex: ['profile', "lastName"],
       key: "lastName",
     },
     {
       title: "Email Address",
-      dataIndex: "email",
+      dataIndex: ['profile', "email"],
       key: "email",
     },
     {
       title: "Cell Number",
-      dataIndex: "cellNumber",
+      dataIndex: ['profile', "cellNumber"],
       key: "cellNumber",
-    },
-    {
-      title: "Role",
-      key: "role",
-      dataIndex: "role",
     },
     {
       title: "Action",
@@ -47,68 +36,23 @@ const TableOne = () => {
     },
   ];
 
-  const data: DataType[] = [
-    {
-      key: "1",
-      firstName: "John",
-      lastName: "Brown",
-      email: "johnbrown@gmail.com",
-      cellNumber: "+27 524 224 4324",
-    },
-    {
-      key: "2",
-      firstName: "Kendric",
-      lastName: "Lamar",
-      email: "kendricLamar@gmail.com",
-      cellNumber: "+27 123 456 789",
-    },
-    {
-      key: "1",
-      firstName: "John",
-      lastName: "Brown",
-      email: "johnbrown@gmail.com",
-      cellNumber: "+27 524 224 4324",
-    },
-    {
-      key: "2",
-      firstName: "Kendric",
-      lastName: "Lamar",
-      email: "kendricLamar@gmail.com",
-      cellNumber: "+27 123 456 789",
-    },
-    {
-      key: "1",
-      firstName: "John",
-      lastName: "Brown",
-      email: "johnbrown@gmail.com",
-      cellNumber: "+27 524 224 4324",
-    },
-  ];
-
   useEffect(() => {
-    console.log("I'm called....")
-    fetchData();
-  }, []);
+    dispatch(fetchAllUsers());
+  }, [dispatch]);
 
-  const fetchData = () => {
+  const dataSource = allUsers ? allUsers.map(user => ({
+    key: user._id,
+    ...user
+  })) : [];
 
-    axios.get(`http://localhost:4000/fetch-users`).then(res => {
-      console.log("res =>", res)
-      // navigate("/dashboard")
-      res.data;
-    }).catch(err => {
-      console.log("err =>", err)
-    })
-  }
-
-
+// TODO display roles
   return (
-    <div className=" bg-white rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 p-4  mt-10">
-        <div className="flex justify-between items-center mb-10">
-        <Typography className="text-2xl">Latest Transactions</Typography>
+    <div className="bg-white rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 p-4 mt-10">
+      <div className="flex justify-between items-center mb-10">
+        <Typography className="text-2xl">Users</Typography>
         <Register />
-        </div>
-      <Table columns={columns} dataSource={data} pagination={false} />
+      </div>
+      <Table columns={columns} dataSource={dataSource} pagination={false} />
       <Pagination className="text-right mt-6" defaultCurrent={1} total={50} />
     </div>
   );

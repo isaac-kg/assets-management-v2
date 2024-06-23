@@ -1,14 +1,17 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Button } from 'antd';
 import { Form, Formik } from 'formik';
 import { useNavigate } from "react-router-dom"
 import * as Yup from 'yup';
 import CustomInput from '../components/Input';
-import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { login } from '../store/auth/actions/auth.actions';
 
 const Login: FC = () => {
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const registerSchema = Yup.object().shape({
     password: Yup.string().required('Required'),
     email: Yup.string().email('Invalid email').required('Required'),
@@ -19,6 +22,7 @@ const Login: FC = () => {
     email: '',
   };
 
+const { error, isLoading } = useSelector((state) => state.auth)
   return (
     <div className="h-screen flex">
       <div className="w-6/12 bg-slate-200 hidden md:flex">
@@ -41,49 +45,7 @@ const Login: FC = () => {
           <Formik
             initialValues={initialValues}
             onSubmit={(values, actions) => {
-              console.log('Value: ', values);
-              //TODO submit values to backend.
-
-              axios.post(`http://localhost:4000/login`, values).then(res => {
-                console.log("res =>", res)
-                
-// data
-// : 
-// profile
-// : 
-// cellNumber
-// : 
-// "+27795813108"
-// email
-// : 
-// "admin@pwy-consulting.com"
-// firstName
-// : 
-// "Admin"
-// idNumber
-// : 
-// "0000000000000"
-// lastName
-// : 
-// "Admin"
-// roles
-// : 
-// ['admin']
-// [[Prototype]]
-// : 
-// Object
-// token
-// : 
-// "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IntcInVzZXJfaWRcIjpcIkNkUldrSDlEWUFUb3cyeWVpXCJ9IiwiaWF0IjoxNzE4ODgwNTQwLCJleHAiOjE3MTg5MDkzNDB9.dhLgBe-1klXmwNMwiikT1g-dPXiG_79_cZf9ef9gDuE"
-// _id
-// : 
-// "CdRWkH9DYATow2yei"
-                navigate("/dashboard")
-                res.data;
-              }).catch(err => {
-                console.log("err =>", err)
-              })
-
+              dispatch(login({ values, navigate}))
             }}
             validationSchema={registerSchema}
           >
@@ -114,9 +76,10 @@ const Login: FC = () => {
                     type="password"
                   />
                 </div>
+                <div className="mt-6">{error ? (<small className="text-danger">{error}</small>) : null}</div>
                 <p className="text-right mt-2">Forgot Password?</p>
                 <div className="mt-6">
-                  <Button type="primary" size="large" block htmlType="submit">
+                  <Button type="primary" disabled={isLoading} size="large" block htmlType="submit">
                     Sign In
                   </Button>
                 </div>

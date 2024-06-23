@@ -1,9 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 import UserOne from '../../images/user/user-01.png';
 
 const DropdownUser = () => {
+  const dispatch = useDispatch();
+
+  const { user } = useSelector((state) => state.auth)
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef<any>(null);
@@ -45,9 +50,9 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Joe Doe
+            {`${user.firstName} ${user.lastName}`}
           </span>
-          <span className="block text-xs">Site Manager</span>
+          <span className="block text-xs">{`${user.roles[0]}`}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
