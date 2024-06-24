@@ -22,6 +22,7 @@ const Login: FC = () => {
     email: '',
   };
 
+console.log("ENV", process.env.REACT_APP_BASE_URL)
 const { error, isLoading } = useSelector((state) => state.auth)
   return (
     <div className="h-screen flex">

@@ -1,34 +1,38 @@
-import React, { useState } from "react";
-import { Button } from "antd";
-import { Form, Formik } from "formik";
-import { useRef } from "react";
-import * as Yup from "yup";
-import CustomInput from "../Input";
-import CustomModal from "../Modal";
-import axios from "axios";
+import React, { useState } from 'react';
+import { Alert, Button, Select } from 'antd';
+import { Form, Formik } from 'formik';
+import { useRef } from 'react';
+import * as Yup from 'yup';
+import CustomInput from '../Input';
+import CustomModal from '../Modal';
+import axios from 'axios';
+import SelectInput from '../SelectInput';
+import CustomAlert from '../Alerts';
 
 const Register = () => {
   const [openModal, setModalOpen] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const formRef = useRef(null);
 
   const registerSchema = Yup.object().shape({
     firstName: Yup.string()
-      .min(2, "Firstname is too short")
-      .max(50, "Firstname is too long")
-      .required("Firstname is required"),
+      .min(2, 'Firstname is too short')
+      .max(50, 'Firstname is too long')
+      .required('Firstname is required'),
     lastName: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Required"),
-    email: Yup.string().email("Invalid email").required("Required"),
+      .min(2, 'Too Short!')
+      .max(50, 'Too Long!')
+      .required('Required'),
+    email: Yup.string().email('Invalid email').required('Required'),
+    roles: Yup.string().required('Role is required'),
   });
 
   const initialValues = {
-    firstName: "",
-    lastName: "",
-    email: "",
-    cellNumber: "",
+    firstName: '',
+    lastName: '',
+    email: '',
+    cellNumber: '',
+    roles: 'user'
   };
 
   return (
@@ -49,11 +53,18 @@ const Register = () => {
             <Formik
               initialValues={initialValues}
               onSubmit={(values, actions) => {
+                
+                setTimeout(() => {
+                  actions.resetForm() 
+                  actions.setFieldValue("roles", "user")
+                  actions.setFieldTouched("roles", "user")
+                  console.log("This is the value:: ", values)
+                }, 3000)
               }}
               validationSchema={registerSchema}
               innerRef={formRef}
             >
-              {({ values, handleChange, errors, touched, handleBlur }) => (
+              {({ values, handleChange, errors, touched, handleBlur, setFieldValue, setFieldTouched }) => (
                 <Form>
                   <CustomInput
                     label="Firstname"
@@ -101,24 +112,50 @@ const Register = () => {
                       touched={touched.cellNumber}
                     />
                   </div>
+                  <div className="mt-4 mb-1">
+                    <SelectInput
+                      label={'Role'}
+                      placeholder={'Enter user \'s role'}
+                      name={'roles'}
+                      onChange={(value) => {
+                        setFieldValue("roles", value)
+                        setFieldTouched("roles", true)
+                      }}
+                      value={values.roles}
+                      option={[{
+                        label: "User",
+                        value: "user"
+                      },{
+                        label: "Admin",
+                        value: "admin"
+                      },{
+                        label: "Tester",
+                        value: "tester"
+                      }]}
+                      errors={errors.roles}
+                      touched={touched.roles}
+                    />
+                  </div>
+                  <CustomAlert message={'this is warning'} type={'warning'} />
+                  <br />
                 </Form>
               )}
             </Formik>
           </div>
         }
         button={{
-          label: isSubmitting ? "Submitting" : "Submit",
+          label: isSubmitting ? 'Submitting' : 'Submit',
           action: () => {
             formRef?.current?.handleSubmit();
           },
-          isOkDisabled: isSubmitting
+          isOkDisabled: isSubmitting,
         }}
         buttonClose={{
-          label: "Cancel",
+          label: 'Cancel',
           action: () => {
             setModalOpen(false);
           },
-          isCancelDisabled: isSubmitting
+          isCancelDisabled: isSubmitting,
         }}
       />
     </React.Fragment>

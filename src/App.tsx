@@ -7,6 +7,7 @@ import Product from './pages/Product';
 import Maintenance from './pages/Maintenance';
 import axios from 'axios';
 import { useEffect } from 'react';
+import PrivateRoute from './pages/privateRoutes';
 
 function App() {
 
@@ -26,22 +27,26 @@ function App() {
     },
     {
       path: '/dashboard',
-      element: <Dashboard />,
+      element: <PrivateRoute element={<Dashboard />} />,
     },
     {
       path: '/user',
-      element: <User />,
+      element: <PrivateRoute element={<User />} />,
     },
     {
       path: '/product',
-      element: <Product />,
+      element: <PrivateRoute element={<Product />} />,
     },
     {
       path: '/maintenance',
-      element: <Maintenance />,
+      element: <PrivateRoute element={<Maintenance />} />,
     },
-    { path: '*', element: <p className='text-center text-4xl mt-15'>Not found</p> },
+    {
+      path: '*',
+      element: <p className='text-center text-4xl mt-15'>Not found</p>,
+    },
   ]);
+
 
   return <RouterProvider router={router} />;
 }
