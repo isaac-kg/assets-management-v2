@@ -17,6 +17,13 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         token: {
           colorPrimary: "#084077",
         },
+        components: {
+          Button: {
+            lineWidth: 0,
+            colorBgContainerDisabled: "#084077",
+            colorTextDisabled: "#fff"
+          },
+        },
       }}
     >
       <App />

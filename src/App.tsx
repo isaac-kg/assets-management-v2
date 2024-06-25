@@ -11,15 +11,6 @@ import PrivateRoute from './pages/privateRoutes';
 
 function App() {
 
-  const baseUrl = "https://pwy-consulting-backend.vercel.app/" 
-  useEffect(() => {
-    axios.get(`${baseUrl}todos/1`).then((response) => {
-      console.log("Response. data")
-    }).catch((error) => {
-      console.log("Error")
-    });
-  }, []);
-
   const router = createBrowserRouter([
     {
       path: '/',

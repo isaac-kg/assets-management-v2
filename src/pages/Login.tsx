@@ -1,14 +1,14 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { Button } from 'antd';
 import { Form, Formik } from 'formik';
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import CustomInput from '../components/Input';
 import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../store/auth/actions/auth.actions';
+import CustomAlert from '../components/Alerts';
 
 const Login: FC = () => {
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -22,9 +22,7 @@ const Login: FC = () => {
     email: '',
   };
 
-console.log("ENV", process.env.REACT_APP_BASE_URL)
-console.log("ENV 2",process.env)
-const { error, isLoading } = useSelector((state) => state.auth)
+  const { error, isLoading } = useSelector((state) => state.auth);
   return (
     <div className="h-screen flex">
       <div className="w-6/12 bg-slate-200 hidden md:flex">
@@ -44,10 +42,11 @@ const { error, isLoading } = useSelector((state) => state.auth)
             Welcome to PWY Consulting assets management platform.
           </p>
 
+          {error && <div className='mb-2'><CustomAlert message={error} type={'error'} /></div>}
           <Formik
             initialValues={initialValues}
             onSubmit={(values, actions) => {
-              dispatch(login({ values, navigate}))
+              dispatch(login({ values, navigate }));
             }}
             validationSchema={registerSchema}
           >
@@ -78,10 +77,16 @@ const { error, isLoading } = useSelector((state) => state.auth)
                     type="password"
                   />
                 </div>
-                <div className="mt-6">{error ? (<small className="text-danger">{error}</small>) : null}</div>
                 <p className="text-right mt-2">Forgot Password?</p>
                 <div className="mt-6">
-                  <Button type="primary" disabled={isLoading} size="large" block htmlType="submit">
+                  <Button
+                    type="primary"
+                    disabled={isLoading}
+                    size="large"
+                    block
+                    htmlType="submit"
+                    loading={isLoading}
+                  >
                     Sign In
                   </Button>
                 </div>

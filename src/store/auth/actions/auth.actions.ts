@@ -16,7 +16,7 @@ export const signUp = (values: any) => async (dispatch: Dispatch) => {
     dispatch(setIsLoading(true));
     values.roles = "tester";
 
-  axios.post(`http://localhost:4000/signup`, values).then(res => {
+  axios.post(`${process.env.REACT_APP_BASE_URL}signup`, values).then(res => {
     console.log("res =>", res.data)
     
     dispatch(setIsLoading(false));
@@ -30,8 +30,8 @@ export const signUp = (values: any) => async (dispatch: Dispatch) => {
     
     dispatch(setIsLoading(true));
     const{ values, navigate } = payload;
-    axios.post(`http://localhost:4000/login`, values).then(res => {
-      console.log("res =>", res.data)
+
+    axios.post(`${process.env.REACT_APP_BASE_URL}login`, values).then(res => {
       const {profile, token, _id} = res.data;
 
       dispatch(setUser(profile));
@@ -44,6 +44,9 @@ export const signUp = (values: any) => async (dispatch: Dispatch) => {
     }).catch(err => {
       dispatch(setError(err.response.data.message))
       dispatch(setIsLoading(false));
+      setTimeout(() => {
+        dispatch(setError(null))
+      }, 4000)
       console.log("err: =>", err.response.data.message)
     })
 
