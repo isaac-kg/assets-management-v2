@@ -8,11 +8,29 @@ import CustomModal from '../Modal';
 import axios from 'axios';
 import SelectInput from '../SelectInput';
 import CustomAlert from '../Alerts';
+import { useDispatch } from 'react-redux';
+import { signUp } from '../../store/auth/actions/auth.actions';
 
 const Register = () => {
   const [openModal, setModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formRef = useRef(null);
+  const dispatch = useDispatch();
+  
+  const [option, setOption] = useState([
+    {
+      label: 'User',
+      value: 'user',
+    },
+    {
+      label: 'Admin',
+      value: 'admin',
+    },
+    {
+      label: 'Tester',
+      value: 'tester',
+    },
+  ]);
 
   const registerSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -32,7 +50,7 @@ const Register = () => {
     lastName: '',
     email: '',
     cellNumber: '',
-    roles: 'user'
+    roles: 'user',
   };
 
   return (
@@ -53,18 +71,29 @@ const Register = () => {
             <Formik
               initialValues={initialValues}
               onSubmit={(values, actions) => {
-                
+
+                dispatch(signUp({ values }));
+                console.log("User:: ", values)
                 setTimeout(() => {
-                  actions.resetForm() 
-                  actions.setFieldValue("roles", "user")
-                  actions.setFieldTouched("roles", "user")
-                  console.log("This is the value:: ", values)
-                }, 3000)
+                  actions.resetForm();
+                  setOption([])
+                  actions.setFieldValue('roles', 'user');
+                  actions.setFieldTouched('roles', 'user');
+                  console.log('This is the value:: ', values);
+                }, 3000);
               }}
               validationSchema={registerSchema}
               innerRef={formRef}
             >
-              {({ values, handleChange, errors, touched, handleBlur, setFieldValue, setFieldTouched }) => (
+              {({
+                values,
+                handleChange,
+                errors,
+                touched,
+                handleBlur,
+                setFieldValue,
+                setFieldTouched,
+              }) => (
                 <Form>
                   <CustomInput
                     label="Firstname"
@@ -115,23 +144,14 @@ const Register = () => {
                   <div className="mt-4 mb-1">
                     <SelectInput
                       label={'Role'}
-                      placeholder={'Enter user \'s role'}
+                      placeholder={"Enter user 's role"}
                       name={'roles'}
                       onChange={(value) => {
-                        setFieldValue("roles", value)
-                        setFieldTouched("roles", true)
+                        setFieldValue('roles', value);
+                        setFieldTouched('roles', true);
                       }}
                       value={values.roles}
-                      option={[{
-                        label: "User",
-                        value: "user"
-                      },{
-                        label: "Admin",
-                        value: "admin"
-                      },{
-                        label: "Tester",
-                        value: "tester"
-                      }]}
+                      option={option}
                       errors={errors.roles}
                       touched={touched.roles}
                     />
@@ -149,6 +169,7 @@ const Register = () => {
             formRef?.current?.handleSubmit();
           },
           isOkDisabled: isSubmitting,
+          isOkLoading: false,
         }}
         buttonClose={{
           label: 'Cancel',

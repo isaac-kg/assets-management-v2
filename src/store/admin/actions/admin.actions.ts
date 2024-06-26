@@ -9,7 +9,8 @@ import axios from "axios";
 
 export const fetchAllUsers = () => async (dispatch: Dispatch) => {
 
-    axios.get(`http://localhost:4000/fetch-users`).then(res => {
+    axios.get(`${process.env.REACT_APP_BASE_URL}fetch-users`).then(res => {
+      console.log("Data: ",res.data.users)
       dispatch(setAllUsers(res.data.users));
 
     }).catch(err => {

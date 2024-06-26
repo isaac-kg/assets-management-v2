@@ -1,7 +1,18 @@
+import { useEffect } from "react";
 import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "../layout/DefaultLayout";
+import axios from "axios";
 
 const Maintenance = () => {
+
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_BASE_URL}maintenance/fetch-all-maintenance`).then(res => {
+      console.log("Data: ",res.data.users)
+
+    }).catch(err => {
+      console.log("err =>", err)
+    })
+  }, [])
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Maintenances" />

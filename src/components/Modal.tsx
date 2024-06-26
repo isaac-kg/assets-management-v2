@@ -9,7 +9,8 @@ interface ButtonInterface{
 }
 
 interface ButtonOk extends ButtonInterface {
-  isOkDisabled?: boolean
+  isOkDisabled?: boolean;
+  isOkLoading?: boolean
 }
 
 interface ButtonClose extends ButtonInterface {
@@ -42,9 +43,8 @@ const CustomModal: FC<CustomModalProps> = ({
         onOk={button.action}
         onCancel={buttonClose.action}
         okText={button.label}
-        okButtonProps={{ disabled: button.isOkDisabled || false }}
+        okButtonProps={{ disabled: button.isOkDisabled || false, loading: button.isOkLoading || false }}
         cancelButtonProps={{disabled: buttonClose.isCancelDisabled || false}}
-
       >
         {content}
       </Modal>
