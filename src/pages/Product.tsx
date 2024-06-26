@@ -1,7 +1,19 @@
+import { useEffect } from "react";
 import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "../layout/DefaultLayout";
+import axios from "axios";
 
 const Product = () => {
+  
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_BASE_URL}items/item/fetch-items`).then(res => {
+      console.log("Data: ",res)
+
+    }).catch(err => {
+      console.log("err =>", err)
+    })
+  }, [])
+  
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Products" />
