@@ -49,7 +49,7 @@ const TableOne = () => {
   return (
     <div className="bg-white rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 p-4 mt-10">
       <div className="flex justify-between items-center mb-10">
-        <Typography className="text-2xl">Users</Typography>
+        <Typography className="text-2xl">User's Information</Typography>
         <Register />
       </div>
       <Table columns={columns} dataSource={dataSource} pagination={false} />

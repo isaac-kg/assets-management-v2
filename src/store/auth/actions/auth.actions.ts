@@ -12,6 +12,7 @@ import axios from 'axios';
 
 export const signUp = (values: any) => async (dispatch: Dispatch) => {
   dispatch(setIsLoading(true));
+  values.idNumber ="4324234242"
 
   axios
     .post(`${process.env.REACT_APP_BASE_URL}signup`, values)
