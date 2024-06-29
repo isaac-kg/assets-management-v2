@@ -7,6 +7,7 @@ export interface AuthState {
   modalOpen: boolean;
   error: string;
   userId: string;
+  success: string;
 }
 
 const initialState: AuthState = {
@@ -16,6 +17,7 @@ const initialState: AuthState = {
   modalOpen: false,
   error: '',
   userId: '',
+  success: '',
 };
 
 export const authStateSlice = createSlice({
@@ -41,6 +43,9 @@ export const authStateSlice = createSlice({
     setUserId: (state, action) => {
       state.userId = action.payload;
     },
+    setSuccess: (state, action) => {
+      state.success = action.payload
+    }
   },
 });
 
@@ -52,6 +57,7 @@ export const {
   setModalOpen,
   setError,
   setUserId,
+  setSuccess
 } = authStateSlice.actions;
 
 export default authStateSlice;

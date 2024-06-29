@@ -7,24 +7,33 @@ import {
   setModalOpen,
   setError,
   setUserId,
+  setSuccess,
 } from '../reducers/auth.reducers';
 import axios from 'axios';
 
-export const signUp = (values: any) => async (dispatch: Dispatch) => {
-  dispatch(setIsLoading(true));
-  values.idNumber ="4324234242"
+export const signUp =
+  ({ values }: Record<string, any>) =>
+  async (dispatch: Dispatch) => {
+    dispatch(setIsLoading(true));
+    values['idNumber'] = '4324234242';
 
-  axios
-    .post(`${process.env.REACT_APP_BASE_URL}signup`, values)
-    .then((res) => {
-      dispatch(setIsLoading(false));
-      dispatch(setModalOpen(false));
-      console.log("This is values: ", res)
-    })
-    .catch((err) => {
-      console.log('err =>', err);
-    });
-};
+    axios
+      .post(`${process.env.REACT_APP_BASE_URL}signup`, values)
+      .then((res) => {
+        dispatch(setModalOpen(false));
+        dispatch(setSuccess('User has been added.'));
+      })
+      .catch((err) => {
+         dispatch(setError(err?.response?.data?.message))
+      })
+      .finally(() => {
+        dispatch(setIsLoading(false));
+        setTimeout(() => {
+          dispatch(setError(""));
+          dispatch(setSuccess(""))
+        }, 4000);
+      });
+  };
 
 export const login = (payload: any) => async (dispatch: Dispatch) => {
   dispatch(setIsLoading(true));
@@ -39,16 +48,14 @@ export const login = (payload: any) => async (dispatch: Dispatch) => {
       dispatch(setUserId(_id));
       dispatch(setToken(token));
       localStorage.setItem('token', token);
-      navigate('/dashboard');
-      res.data;
       dispatch(setIsLoading(false));
+      navigate('/dashboard');
     })
     .catch((err) => {
-      dispatch(setError(err.response.data.message));
+      dispatch(setError(err?.response?.data?.message));
       dispatch(setIsLoading(false));
       setTimeout(() => {
-        dispatch(setError(null));
+        dispatch(setError(""));
       }, 4000);
-      console.log('err: =>', err.response.data.message);
     });
 };

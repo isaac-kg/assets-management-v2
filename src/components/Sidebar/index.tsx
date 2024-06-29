@@ -295,6 +295,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   'bg-graydark dark:bg-meta-4'
                 }`}
                 onClick={(e) => {
+                  console.log("This is called...")
                   e.preventDefault();
                 }}
               >

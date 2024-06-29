@@ -4,13 +4,13 @@ import { Form, Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import CustomInput from '../components/Input';
-import { useSelector, useDispatch } from 'react-redux';
 import { login } from '../store/auth/actions/auth.actions';
 import CustomAlert from '../components/Alerts';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 
 const Login: FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const registerSchema = Yup.object().shape({
     password: Yup.string().required('Required'),
@@ -22,7 +22,7 @@ const Login: FC = () => {
     email: '',
   };
 
-  const { error, isLoading } = useSelector((state) => state.auth);
+  const { error, isLoading } = useAppSelector((state) => state.auth);
   return (
     <div className="h-screen flex">
       <div className="w-6/12 bg-slate-200 hidden md:flex">

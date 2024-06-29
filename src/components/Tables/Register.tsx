@@ -5,18 +5,18 @@ import { useRef } from 'react';
 import * as Yup from 'yup';
 import CustomInput from '../Input';
 import CustomModal from '../Modal';
-import axios from 'axios';
 import SelectInput from '../SelectInput';
 import CustomAlert from '../Alerts';
-import { useDispatch } from 'react-redux';
 import { signUp } from '../../store/auth/actions/auth.actions';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 const Register = () => {
   const [openModal, setModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const formRef = useRef(null);
-  const dispatch = useDispatch();
-  
+  const dispatch = useAppDispatch();
+  const { error, success, isLoading } = useAppSelector((state) => state.auth);
+
   const [option, setOption] = useState([
     {
       label: 'User',
@@ -70,19 +70,10 @@ const Register = () => {
           <div>
             <Formik
               initialValues={initialValues}
-              onSubmit={(values, actions) => {
-
+              onSubmit={(values: Record<string, any>, actions) => {
                 dispatch(signUp({ values }));
-                console.log("User:: ", values)
-                setTimeout(() => {
-                  actions.resetForm();
-                  setOption([])
-                  actions.setFieldValue('roles', 'user');
-                  actions.setFieldTouched('roles', 'user');
-                  console.log('This is the value:: ', values);
-                }, 3000);
               }}
-              validationSchema={registerSchema}
+              //validationSchema={registerSchema}
               innerRef={formRef}
             >
               {({
@@ -156,7 +147,10 @@ const Register = () => {
                       touched={touched.roles}
                     />
                   </div>
-                  <CustomAlert message={'this is warning'} type={'warning'} />
+                  {success && (
+                    <CustomAlert message={success} type={'success'} />
+                  )}
+                  {error && <CustomAlert message={error} type={'error'} />}
                   <br />
                 </Form>
               )}
@@ -169,7 +163,7 @@ const Register = () => {
             formRef?.current?.handleSubmit();
           },
           isOkDisabled: isSubmitting,
-          isOkLoading: false,
+          isOkLoading: isLoading,
         }}
         buttonClose={{
           label: 'Cancel',

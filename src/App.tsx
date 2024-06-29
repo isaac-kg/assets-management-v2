@@ -5,8 +5,6 @@ import User from './pages/User';
 import Login from './pages/Login';
 import Product from './pages/Product';
 import Maintenance from './pages/Maintenance';
-import axios from 'axios';
-import { useEffect } from 'react';
 import PrivateRoute from './pages/privateRoutes';
 
 function App() {

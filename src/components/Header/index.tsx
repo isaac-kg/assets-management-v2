@@ -1,6 +1,3 @@
-import { Link } from 'react-router-dom';
-import LogoIcon from '../../images/logo/logo-icon.svg';
-import DarkModeSwitcher from './DarkModeSwitcher';
 import DropdownUser from './DropdownUser';
 
 const Header = (props: {
