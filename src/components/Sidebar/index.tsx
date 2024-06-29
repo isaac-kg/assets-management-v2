@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import SidebarLinkGroup from './SidebarLinkGroup';
+import { logOut } from '../../store/auth/actions/auth.actions';
+import { useAppDispatch } from '../../store/hooks';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -19,6 +21,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true',
   );
 
+  const dispatch = useAppDispatch()
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
@@ -295,7 +298,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   'bg-graydark dark:bg-meta-4'
                 }`}
                 onClick={(e) => {
-                  console.log("This is called...")
+                  dispatch(logOut())
                   e.preventDefault();
                 }}
               >

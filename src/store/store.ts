@@ -4,11 +4,13 @@ import AuthReducer from "./auth/reducers/auth.reducers";
 
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+import { api } from '../Services/user';
 
 const middlewares: any = [];
 const rootReducer = combineReducers({
   admin: AdminReducer.reducer,
-  auth: AuthReducer.reducer
+  auth: AuthReducer.reducer,
+  [api.reducerPath]: api.reducer,
 })
 
 const persistConfig = {
@@ -24,7 +26,7 @@ const store = configureStore({
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false
-    }).concat(middlewares)
+    }).concat(middlewares, api.middleware)
 });
 
 export type RootState = ReturnType<typeof store.getState>;

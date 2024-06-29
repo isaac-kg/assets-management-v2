@@ -9,6 +9,7 @@ import SelectInput from '../SelectInput';
 import CustomAlert from '../Alerts';
 import { signUp } from '../../store/auth/actions/auth.actions';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAddUserMutation, useGetUsersQuery } from '../../Services/user';
 
 const Register = () => {
   const [openModal, setModalOpen] = useState(false);
@@ -53,6 +54,11 @@ const Register = () => {
     roles: 'user',
   };
 
+  const [addUser] =  useAddUserMutation();
+  const AddHandler = async (value: any) => {
+    const payload = await addUser(value)
+  }
+
   return (
     <React.Fragment>
       <Button
@@ -71,9 +77,9 @@ const Register = () => {
             <Formik
               initialValues={initialValues}
               onSubmit={(values: Record<string, any>, actions) => {
-                dispatch(signUp({ values }));
+                AddHandler(values)
               }}
-              //validationSchema={registerSchema}
+             // validationSchema={registerSchema}
               innerRef={formRef}
             >
               {({

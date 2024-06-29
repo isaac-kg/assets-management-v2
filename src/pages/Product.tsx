@@ -8,7 +8,6 @@ const Product = () => {
   
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_BASE_URL}items/item/fetch-items`).then(res => {
-      console.log("Data: ",res.data.items)
 
     }).catch(err => {
       console.log("err =>", err)

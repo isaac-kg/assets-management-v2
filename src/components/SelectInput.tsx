@@ -43,6 +43,7 @@ const SelectInput: FC<CustomInputProp> = ({
         onSearch={onSearch}
         options={option}
         className='w-full'
+        value={null}
       />
       <div>
         {(touched || (value && value.length > 0)) && errors ? (

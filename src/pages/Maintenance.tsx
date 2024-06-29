@@ -7,10 +7,8 @@ const Maintenance = () => {
 
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_BASE_URL}maintenance/fetch-all-maintenance`).then(res => {
-      console.log("Data: ",res)
 
     }).catch(err => {
-      console.log("err =>", err)
     })
   }, [])
   return (

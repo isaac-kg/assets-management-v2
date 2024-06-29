@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-
 import UserOne from '../../images/user/user-01.png';
+import { logOut } from '../../store/auth/actions/auth.actions';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 const DropdownUser = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const { user } = useSelector((state) => state.auth)
+  const { user } = useAppSelector((state) => state.auth)
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -158,7 +158,7 @@ const DropdownUser = () => {
             </Link>
           </li>
         </ul>
-        <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+        <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base" onClick={() =>  dispatch(logOut())}>
           <svg
             className="fill-current"
             width="22"

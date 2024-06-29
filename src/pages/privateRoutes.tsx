@@ -1,8 +1,10 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
+import { useAppSelector } from '../store/hooks';
 
 const PrivateRoute = ({ element: Component }) => {
-  const isAuthenticated = localStorage.getItem('token'); // Example of checking authentication
+  const {token} = useAppSelector((state) => state.auth)
+  const isAuthenticated = token;
 
   return isAuthenticated ? Component : <Navigate to="/" />;
 };

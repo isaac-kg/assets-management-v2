@@ -15,7 +15,7 @@ export const signUp =
   ({ values }: Record<string, any>) =>
   async (dispatch: Dispatch) => {
     dispatch(setIsLoading(true));
-    values['idNumber'] = '4324234242';
+    values['idNumber'] = '98234234242';
 
     axios
       .post(`${process.env.REACT_APP_BASE_URL}signup`, values)
@@ -58,4 +58,8 @@ export const login = (payload: any) => async (dispatch: Dispatch) => {
         dispatch(setError(""));
       }, 4000);
     });
-};
+}; 
+
+export const logOut = () => (dispatch: Dispatch) => {
+  dispatch(setResetUserState())
+}
