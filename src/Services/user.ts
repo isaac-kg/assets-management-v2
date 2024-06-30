@@ -7,7 +7,8 @@ export interface User extends Record<string, any> {
 
 const baseUrl =  `${process.env.REACT_APP_BASE_URL}`
 
-export const api = createApi({
+export const userApi = createApi({
+  reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({ baseUrl }),
   tagTypes: ['User'],
   endpoints: (build) => ({
@@ -15,15 +16,14 @@ export const api = createApi({
       query: () => 'fetch-users',
       providesTags: ["User"],
       transformResponse: response => {
-        console.log('transform', response?.users);
         return response?.users;
-   },
+    },
     }),
     addUser: build.mutation<any, Partial<any>>({
-        query: (body) => ({
-            url: `signup`,
-            method: 'POST',
-            body,
+      query: (body) => ({
+        url: `signup`,
+        method: 'POST',
+        body,
         }),
       invalidatesTags: ['User'],
     }),
@@ -66,4 +66,4 @@ export const api = createApi({
 export const {
   useAddUserMutation,
   useGetUsersQuery
-} = api
+} = userApi

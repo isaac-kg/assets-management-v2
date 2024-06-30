@@ -21,7 +21,7 @@ interface CustomModalProps {
   isOpen: boolean;
   content: ReactNode;
   title: string;
-  button: ButtonOk;
+  button?: ButtonOk;
   buttonClose: ButtonClose;
   
 }
@@ -40,10 +40,10 @@ const CustomModal: FC<CustomModalProps> = ({
         className="custom-modal"
         centered
         open={isOpen}
-        onOk={button.action}
+        onOk={button?.action}
         onCancel={buttonClose.action}
-        okText={button.label}
-        okButtonProps={{ disabled: button.isOkDisabled || false, loading: button.isOkLoading || false }}
+        okText={button?.label}
+        okButtonProps={{ disabled: button?.isOkDisabled || false, loading: button?.isOkLoading || false }}
         cancelButtonProps={{disabled: buttonClose.isCancelDisabled || false}}
       >
         {content}
