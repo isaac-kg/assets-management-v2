@@ -7,7 +7,6 @@ import { useGetUsersQuery } from '../../Services/user';
 
 const TableOne = () => {
   const dispatch = useAppDispatch();
-  const { allUsers, isLoading } = useAppSelector((state) => state.admin);
 
   const columns = [
     {
@@ -29,12 +28,7 @@ const TableOne = () => {
       title: 'Cell Number',
       dataIndex: ['profile', 'cellNumber'],
       key: 'cellNumber',
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: () => <Button type="primary">View</Button>,
-    },
+    }
   ];
 
   const { data, error, isLoading: isNewLoading, isSuccess, } = useGetUsersQuery();
@@ -60,7 +54,7 @@ const TableOne = () => {
       </Skeleton>
       <Skeleton loading={isNewLoading}>
         <Table columns={columns} dataSource={dataSource} pagination={false} />
-        <Pagination className="text-right mt-6" defaultCurrent={1} total={50} />
+        {/* <Pagination className="text-right mt-6" defaultCurrent={1} total={50} /> */}
       </Skeleton>
     </div>
   );
