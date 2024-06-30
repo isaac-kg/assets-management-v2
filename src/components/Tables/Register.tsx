@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Button, Select } from 'antd';
+import { Button } from 'antd';
 import { Form, Formik } from 'formik';
 import { useRef } from 'react';
 import * as Yup from 'yup';
@@ -7,18 +7,16 @@ import CustomInput from '../Input';
 import CustomModal from '../Modal';
 import SelectInput from '../SelectInput';
 import CustomAlert from '../Alerts';
-import { signUp } from '../../store/auth/actions/auth.actions';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { useAddUserMutation, useGetUsersQuery } from '../../Services/user';
+import { useAddUserMutation } from '../../Services/user';
 
 const Register = () => {
-  const [openModal, setModalOpen] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [openModal, setModalOpen] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const formRef = useRef(null);
-  const dispatch = useAppDispatch();
-  const { error, success, isLoading } = useAppSelector((state) => state.auth);
+  const [error, setError] = useState<string>("");
+  const [success, setSuccess] = useState<string>("");
 
-  const [option, setOption] = useState([
+  const option = [
     {
       label: 'User',
       value: 'user',
@@ -31,7 +29,9 @@ const Register = () => {
       label: 'Tester',
       value: 'tester',
     },
-  ]);
+  ];
+
+  const phoneNumberRegex = /^(\+?27|0)[6-8][0-9]{8}$/;
 
   const registerSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -39,11 +39,14 @@ const Register = () => {
       .max(50, 'Firstname is too long')
       .required('Firstname is required'),
     lastName: Yup.string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('Required'),
-    email: Yup.string().email('Invalid email').required('Required'),
+      .min(2, 'Lastname is short!')
+      .max(50, 'Lastname is too Long!')
+      .required('Lastname is required'),
+    email: Yup.string().email('Invalid email').required('Email is required'),
     roles: Yup.string().required('Role is required'),
+    cellNumber: Yup.string()
+      .matches(phoneNumberRegex, 'Phone number is not valid')
+      .required('Phone number is required.'),
   });
 
   const initialValues = {
@@ -51,13 +54,29 @@ const Register = () => {
     lastName: '',
     email: '',
     cellNumber: '',
-    roles: 'user',
+    roles: null,
   };
 
-  const [addUser] =  useAddUserMutation();
-  const AddHandler = async (value: any) => {
-    const payload = await addUser(value)
-  }
+  const [addUser] = useAddUserMutation();
+  const submitUser = async (value: any) => {
+    setIsSubmitting(true)
+    const {data, error: userError} = await addUser(value);
+    console.log("Data", data)
+    console.log("userError", userError)
+    if(data || userError){
+      if(userError){
+       setError(userError?.data?.message)
+      }else{
+        setSuccess("Account has been created.")
+      }
+    }
+
+    setTimeout(() => {
+      setError("");
+      setSuccess("");
+    }, 3000)
+    setIsSubmitting(false)
+  };
 
   return (
     <React.Fragment>
@@ -65,6 +84,7 @@ const Register = () => {
         type="primary"
         onClick={() => {
           setModalOpen(true);
+          formRef?.current?.resetForm()
         }}
       >
         Create Users
@@ -77,9 +97,9 @@ const Register = () => {
             <Formik
               initialValues={initialValues}
               onSubmit={(values: Record<string, any>, actions) => {
-                AddHandler(values)
+                submitUser(values)
               }}
-             // validationSchema={registerSchema}
+              validationSchema={registerSchema}
               innerRef={formRef}
             >
               {({
@@ -169,12 +189,14 @@ const Register = () => {
             formRef?.current?.handleSubmit();
           },
           isOkDisabled: isSubmitting,
-          isOkLoading: isLoading,
+          isOkLoading: isSubmitting,
         }}
         buttonClose={{
           label: 'Cancel',
           action: () => {
-            setModalOpen(false);
+            if(!isSubmitting){
+              setModalOpen(false);
+            }
           },
           isCancelDisabled: isSubmitting,
         }}

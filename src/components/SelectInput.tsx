@@ -18,6 +18,7 @@ interface CustomInputProp {
   onSearch?: (e: any) => void;
   type?: string;
   option:  option[];
+  defaultValue? : null
 }
 
 const SelectInput: FC<CustomInputProp> = ({
@@ -30,12 +31,13 @@ const SelectInput: FC<CustomInputProp> = ({
   errors,
   onSearch,
   option,
+  defaultValue
 }) => {
   return (
     <div>
       <Typography className="text-base mb-0.5">{label}</Typography>
       <Select
-        defaultValue={value}
+        defaultValue={defaultValue}
         placeholder={placeholder}
         optionFilterProp="label"
         onChange={onChange}
@@ -43,7 +45,7 @@ const SelectInput: FC<CustomInputProp> = ({
         onSearch={onSearch}
         options={option}
         className='w-full'
-        value={null}
+        value={value}
       />
       <div>
         {(touched || (value && value.length > 0)) && errors ? (
