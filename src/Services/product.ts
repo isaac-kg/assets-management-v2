@@ -11,7 +11,6 @@ export const productApi = createApi({
       query: () => 'items/item/fetch-items',
       providesTags: ['Product'],
       transformResponse: (response) => {
-        console.log("This is is product::: ", response.items)
         return response.items;
       },
     }),
