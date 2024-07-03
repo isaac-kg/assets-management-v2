@@ -51,9 +51,6 @@ const Product = () => {
         }))
       : [];
 
-
-      console.log("Data: ", data)
-
   const modal = () => {
     return (
       <CustomModal

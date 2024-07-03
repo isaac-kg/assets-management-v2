@@ -61,8 +61,6 @@ const Register = () => {
   const submitUser = async (value: any) => {
     setIsSubmitting(true)
     const {data, error: userError} = await addUser(value);
-    console.log("Data", data)
-    console.log("userError", userError)
     if(data || userError){
       if(userError){
        setError(userError?.data?.message)
