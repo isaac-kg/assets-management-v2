@@ -5,7 +5,6 @@ import { logOut } from '../../store/auth/actions/auth.actions';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import logout from '../../images/icon/logout.svg';
 import profile from '../../images/icon/profile.svg';
-import settings from '../../images/icon/settings.svg';
 import { Image } from 'antd';
 
 const DropdownUser = () => {
@@ -97,15 +96,6 @@ const DropdownUser = () => {
             >
               <Image preview={false} height={30} width={30} src={profile} />
               My Profile
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/pages/settings"
-              className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
-            >
-              <Image preview={false} height={30} width={30} src={settings} />
-              Account Settings
             </Link>
           </li>
         </ul>
