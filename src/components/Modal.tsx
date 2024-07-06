@@ -37,7 +37,7 @@ const CustomModal: FC<CustomModalProps> = ({
     <Fragment>
       <Modal
         title={title}
-        className="custom-modal"
+        className="custom-modal overflow-hidden"
         centered
         open={isOpen}
         onOk={button?.action}

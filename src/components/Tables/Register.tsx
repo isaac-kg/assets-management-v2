@@ -26,8 +26,8 @@ const Register = () => {
       value: 'admin',
     },
     {
-      label: 'Tester',
-      value: 'tester',
+      label: 'Manager',
+      value: 'manager',
     },
   ];
 
@@ -43,7 +43,7 @@ const Register = () => {
       .max(50, 'Lastname is too Long!')
       .required('Lastname is required'),
     email: Yup.string().email('Invalid email').required('Email is required'),
-    roles: Yup.string().required('Role is required'),
+    roles: Yup.array().required("Roles is required"),
     cellNumber: Yup.string()
       .matches(phoneNumberRegex, 'Phone number is not valid')
       .required('Phone number is required.'),
@@ -63,6 +63,7 @@ const Register = () => {
     const {data, error: userError} = await addUser(value);
     if(data || userError){
       if(userError){
+        console.log("User Error", userError)
        setError(userError?.data?.message)
       }else{
         setSuccess("Account has been created.")
@@ -169,6 +170,7 @@ const Register = () => {
                       option={option}
                       errors={errors.roles}
                       touched={touched.roles}
+                      mode="multiple"
                     />
                   </div>
                   {success && (

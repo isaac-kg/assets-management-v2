@@ -18,7 +18,8 @@ interface CustomInputProp {
   onSearch?: (e: any) => void;
   type?: string;
   option:  option[];
-  defaultValue? : null
+  defaultValue? : null,
+  mode: undefined | any
 }
 
 const SelectInput: FC<CustomInputProp> = ({
@@ -31,7 +32,8 @@ const SelectInput: FC<CustomInputProp> = ({
   errors,
   onSearch,
   option,
-  defaultValue
+  defaultValue,
+  mode = undefined
 }) => {
   return (
     <div>
@@ -46,6 +48,7 @@ const SelectInput: FC<CustomInputProp> = ({
         options={option}
         className='w-full'
         value={value}
+        mode={mode}
       />
       <div>
         {(touched || (value && value.length > 0)) && errors ? (
