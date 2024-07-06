@@ -7,8 +7,9 @@ import dashboardIcon from '../../images/icon/icon-dashboard.svg';
 import maintenanceIcon from '../../images/icon/icon-maintenance.svg';
 import productIcon from '../../images/icon/icon-product.svg';
 import usersIcon from '../../images/icon/icon-users.svg';
-import settingsIcon from '../../images/icon/icon-settings.svg';
 import signOutIcon from '../../images/icon/icon-signout.svg';
+import profile from '../../images/icon/icon-profile.svg';
+
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -145,21 +146,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </NavLink>
               </li>
               <li>
-                <NavLink
-                  to="/settings"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('settings') &&
-                    'bg-graydark dark:bg-meta-4'
-                  }`}
-                >
-                  <Image
-                    preview={false}
-                    height={30}
-                    width={30}
-                    src={settingsIcon}
-                  />
-                  Settings
-                </NavLink>
               </li>
             </ul>
           </div>
@@ -170,6 +156,24 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             </h3>
 
             <ul className="mb-6 flex flex-col gap-1.5">
+              <li>
+              <NavLink
+                to="/profile"
+                className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                  (pathname === '/profile' || pathname.includes('profile')) &&
+                  'bg-graydark dark:bg-meta-4'
+                }`}
+              >
+                <Image
+                  height={30}
+                  width={30}
+                  preview={false}
+                  src={profile}
+                />
+                Profile
+              </NavLink>
+              </li>
+              <li>
               <NavLink
                 to="#"
                 className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -189,6 +193,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 />
                 Sign Out
               </NavLink>
+              </li>
             </ul>
           </div>
         </nav>

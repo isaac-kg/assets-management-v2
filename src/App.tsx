@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Product from './pages/Product';
 import Maintenance from './pages/Maintenance';
 import PrivateRoute from './pages/privateRoutes';
+import Profile from './pages/Profile';
 
 function App() {
 
@@ -29,6 +30,10 @@ function App() {
     {
       path: '/maintenance',
       element: <PrivateRoute element={<Maintenance />} />,
+    },
+    {
+      path: '/profile',
+      element: <PrivateRoute element={<Profile />} />,
     },
     {
       path: '*',
