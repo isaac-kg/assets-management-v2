@@ -96,7 +96,7 @@ const Register = () => {
             <Formik
               initialValues={initialValues}
               onSubmit={(values: Record<string, any>, actions) => {
-                submitUser(values)
+                submitUser(values) 
               }}
               validationSchema={registerSchema}
               innerRef={formRef}
