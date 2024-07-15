@@ -1,19 +1,16 @@
-import React, { useState } from 'react';
 import { Button } from 'antd';
 import { Form, Formik } from 'formik';
-import { useRef } from 'react';
 import * as Yup from 'yup';
 import Breadcrumb from '../components/Breadcrumbs/Breadcrumb';
 import DefaultLayout from '../layout/DefaultLayout';
 import CustomInput from '../components/Input';
-import SelectInput from '../components/SelectInput';
-import CustomAlert from '../components/Alerts';
 import { useAppSelector } from '../store/hooks';
+import SelectInput from '../components/SelectInput';
 
 const Profile = () => {
   const phoneNumberRegex = /^(\+?27|0)[6-8][0-9]{8}$/;
   const { user } = useAppSelector((state) => state.auth);
- console.log("user information", user);
+  console.log('user information', user);
 
   const profielUpdateSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -25,7 +22,6 @@ const Profile = () => {
       .max(50, 'Lastname is too Long!')
       .required('Lastname is required'),
     email: Yup.string().email('Invalid email').required('Email is required'),
-   // roles: Yup.array().required('Roles is required'),
     cellNumber: Yup.string()
       .matches(phoneNumberRegex, 'Phone number is not valid')
       .required('Phone number is required.'),
@@ -36,30 +32,38 @@ const Profile = () => {
     lastName: user?.lastName,
     email: user?.email,
     cellNumber: user?.cellNumber,
-    roles: null,
+    roles: user?.roles,
   };
+
+
+  const option = [
+    {
+      label: 'User',
+      value: 'user',
+    },
+    {
+      label: 'Admin',
+      value: 'admin',
+    },
+    {
+      label: 'Manager',
+      value: 'manager',
+    },
+  ];
 
   return (
     <DefaultLayout>
       <Breadcrumb pageName="Update Profile" />
 
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-10 max-w-115 mt-10">
         <Formik
           initialValues={initialValues}
           onSubmit={(values: Record<string, any>, actions) => {
-            console.log("Call profile update method", values)
+            console.log('Call profile update method', values);
           }}
           validationSchema={profielUpdateSchema}
         >
-          {({
-            values,
-            handleChange,
-            errors,
-            touched,
-            handleBlur,
-            setFieldValue,
-            setFieldTouched,
-          }) => (
+          {({ values, handleChange, errors, touched, handleBlur, setFieldValue, setFieldTouched }) => (
             <Form>
               <CustomInput
                 label="Firstname"
@@ -108,9 +112,25 @@ const Profile = () => {
                 />
               </div>
               <div className="mt-4 mb-1">
-              
+                <SelectInput
+                  label={'Role'}
+                  placeholder={"Enter user 's role"}
+                  name={'roles'}
+                  onChange={(value) => {
+                    setFieldValue('roles', value);
+                    setFieldTouched('roles', true);
+                  }}
+                  value={values.roles}
+                  option={option}
+                  errors={errors.roles}
+                  touched={touched.roles}
+                  mode="multiple"
+                />
               </div>
-              <Button htmlType="submit" block type='primary'>Submit</Button>
+              <div className="mt-4 mb-1"></div>
+              <Button htmlType="submit" block type="primary">
+                Submit
+              </Button>
               <br />
             </Form>
           )}

@@ -1,13 +1,10 @@
-import React, { useEffect } from 'react';
-import { Button, Pagination, Skeleton, Table, Tag, Typography } from 'antd';
+import React from 'react';
+import { Button, Skeleton, Table, Tag, Typography } from 'antd';
 import Register from './Register';
-import { fetchAllUsers } from '../../store/admin/actions/admin.actions';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useGetUsersQuery } from '../../Services/user';
+import { Link } from 'react-router-dom';
 
 const TableOne = () => {
-  const dispatch = useAppDispatch();
-
   const columns = [
     {
       title: 'First Name',
@@ -63,16 +60,7 @@ const TableOne = () => {
     },
   ];
 
-  const {
-    data,
-    error,
-    isLoading,
-    isSuccess,
-  } = useGetUsersQuery();
-
-  useEffect(() => {
-    // dispatch(fetchAllUsers());
-  }, []);
+  const { data, isLoading } = useGetUsersQuery();
 
   const dataSource =
     data && data.length > 0
@@ -82,6 +70,9 @@ const TableOne = () => {
           roles: user.profile.roles,
         }))
       : [];
+
+  const userLink =
+    'https://pwy-consulting-backend.vercel.app/generate-users-report';
 
   return (
     <div className="bg-white rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 p-4">
@@ -96,7 +87,15 @@ const TableOne = () => {
         <React.Fragment>
           <div className="flex justify-between items-center mb-10">
             <Typography className="text-2xl">User's Information</Typography>
-            <Register />
+            <div>
+              <Button
+                className="border-2 border-primary-color mr-4 text-primary-color"
+                onClick={() => window.open(userLink)}
+              >
+                Download
+              </Button>
+              <Register />
+            </div>
           </div>
           <Table
             columns={columns}
