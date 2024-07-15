@@ -115,6 +115,13 @@ const Product = () => {
                 <Typography className="text-2xl">
                   Products Information
                 </Typography>
+
+                <Button
+                  className="border-2 border-primary-color mr-4 text-primary-color"
+                  onClick={() => window.open("https://pwy-consulting-backend.vercel.app/generate-items-report")}
+                >
+                  Download
+                </Button>
               </div>
               <Table
                 columns={columns}
