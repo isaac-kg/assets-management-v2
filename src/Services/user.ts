@@ -27,6 +27,17 @@ export const userApi = createApi({
         }),
       invalidatesTags: ['User'],
     }),
+    updateUser: build.mutation<any, Partial<any>>({
+      query: (body: any) => ({
+        url: `update-profile`,
+        method: 'POST',
+        body: body,
+      })
+    }),
+    getUser: build.query<any, string>({
+      query: (id) => `posts/${id}`,
+    }),
+
     // getUser: build.query<Post, string>({
     //   query: (id) => `posts/${id}`,
     //   providesTags: (result, error, id) => [{ type: 'Post', id }],
@@ -65,5 +76,6 @@ export const userApi = createApi({
 
 export const {
   useAddUserMutation,
-  useGetUsersQuery
+  useGetUsersQuery,
+  useUpdateUserMutation
 } = userApi

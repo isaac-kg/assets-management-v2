@@ -42,6 +42,9 @@ const Register = () => {
       .min(2, 'Lastname is short!')
       .max(50, 'Lastname is too Long!')
       .required('Lastname is required'),
+    idNumber: Yup.string()
+    .matches(/^\d{13}$/, "Id number is invalid")
+    .required('Id number is required'),
     email: Yup.string().email('Invalid email').required('Email is required'),
     roles: Yup.array().required("Roles is required"),
     cellNumber: Yup.string()
@@ -55,6 +58,7 @@ const Register = () => {
     email: '',
     cellNumber: '',
     roles: null,
+    idNumber: null
   };
 
   const [addUser] = useAddUserMutation();
@@ -121,7 +125,6 @@ const Register = () => {
                     errors={errors.firstName}
                     touched={touched.firstName}
                   />
-
                   <div className="mt-4 mb-1">
                     <CustomInput
                       label="Lastname"
@@ -132,6 +135,18 @@ const Register = () => {
                       onBlur={handleBlur}
                       errors={errors.lastName}
                       touched={touched.lastName}
+                    />
+                  </div>
+                  <div className="mt-4 mb-1">
+                    <CustomInput
+                      label="ID Number"
+                      name="idNumber"
+                      value={values.idNumber}
+                      placeholder="Enter ID Number"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      errors={errors.idNumber}
+                      touched={touched.idNumber}
                     />
                   </div>
                   <div className="mt-4 mb-1">

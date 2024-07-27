@@ -60,6 +60,28 @@ export const login = (payload: any) => async (dispatch: Dispatch) => {
     });
 }; 
 
+export const updateUser = (payload: any) =>  async (dispatch: Dispatch) =>{
+  dispatch(setIsLoading(true));
+  const { values } = payload;
+
+  
+  axios
+    .post(`${process.env.REACT_APP_BASE_URL}login`, values)
+    .then((res) => {
+      console.log("Response: ", res);
+      dispatch(setIsLoading(false));
+    })
+    .catch((err) => {
+      console.log("Error: ", err);
+      dispatch(setError(err?.response?.data?.message));
+      dispatch(setIsLoading(false));
+      setTimeout(() => {
+        dispatch(setError(""));
+      }, 4000);
+    });
+
+}
+
 export const logOut = () => (dispatch: Dispatch) => {
   dispatch(setResetUserState())
 }
