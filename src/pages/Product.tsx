@@ -47,6 +47,8 @@ const Product = () => {
   const [openModal, setModalOpen] = useState<boolean>(false);
   const [product, setProduct] = useState(null);
 
+  console.log("data product: ", data)
+
   const dataSource =
     data && data.length > 0
       ? data.map((product: any) => ({
@@ -63,28 +65,34 @@ const Product = () => {
         isOpen={openModal}
         content={
           <div>
-            <p>
-              <strong>Name: </strong>
+            <p className="flex">
+              <strong className='w-22 block'>Name: </strong>
               {product?.name}
             </p>
-            <p>
-              <strong>Date Created:</strong>{' '}
+            <p className="mt-3 flex">
+              <strong className='w-22 block'>Created At:</strong>{' '}
               {moment(product?.createdAt).format('DD MMMM YYYY')}
             </p>
-            <div>
+            <p className="mt-3 flex">
+              <strong className='w-22 block'>location Id: </strong>
+              {product?.locationId}
+            </p>
+            <p className="mt-3 flex">
+              <strong className='w-22 block shrink-0'>Description: </strong>
+              <p>{product?.description}</p>
+            </p>
+            <div className="mt-3">
               {product?.qr && (
-                <Image
-                  src={product?.qr}
-                  height={120}
-                  className="bg-slate-400 rounded-sm -ml-2"
-                />
+                <div className="flex">
+                  <p className='w-22 block'><strong>QR Code: </strong></p>
+                  <Image
+                    src={product?.qr}
+                    height={120}
+                    className="bg-slate-400 rounded-sm -ml-2"
+                  />
+                </div>
               )}
             </div>
-            <p>
-              <strong>Description: </strong>
-              <br></br>
-              {product?.description}
-            </p>
           </div>
         }
         buttonClose={{

@@ -6,6 +6,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 import { userApi } from '../Services/user';
 import { productApi } from '../Services/product';
+import { locationApi } from '../Services/location';
 
 const middlewares: any = [];
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   auth: AuthReducer.reducer,
   [userApi.reducerPath]: userApi.reducer,
   [productApi.reducerPath]: productApi.reducer,
+  [locationApi.reducerPath]: locationApi.reducer
 })
 
 const persistConfig = {
@@ -28,7 +30,7 @@ const store = configureStore({
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false
-    }).concat(middlewares, userApi.middleware, productApi.middleware)
+    }).concat(middlewares, userApi.middleware, productApi.middleware, locationApi.middleware)
 });
 
 export type RootState = ReturnType<typeof store.getState>;

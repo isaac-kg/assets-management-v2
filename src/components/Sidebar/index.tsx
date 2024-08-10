@@ -5,6 +5,7 @@ import { useAppDispatch } from '../../store/hooks';
 import { Image } from 'antd';
 import dashboardIcon from '../../images/icon/icon-dashboard.svg';
 import maintenanceIcon from '../../images/icon/icon-maintenance.svg';
+import locationIcon from '../../images/icon/icon-location.svg';
 import productIcon from '../../images/icon/icon-product.svg';
 import usersIcon from '../../images/icon/icon-users.svg';
 import signOutIcon from '../../images/icon/icon-signout.svg';
@@ -144,6 +145,23 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   />
                   Maintenances
                 </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/location"
+                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                      pathname.includes('location') &&
+                      'bg-graydark dark:bg-meta-4'
+                    }`}
+                  >
+                    <Image
+                      preview={false}
+                      height={30}
+                      width={30}
+                      src={locationIcon}
+                    />
+                    Location
+                  </NavLink>
               </li>
               <li>
               </li>
